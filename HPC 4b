@@ -1,0 +1,59 @@
+HPC 4b
+
+Title:
+Write a Program for Matrix Multiplication using CUDA C
+
+What is CUDA
+CUDA (Compute Unified Device Architecture) is a parallel computing platform and programming model developed by NVIDIA. It allows developers to use the power of NVIDIA graphics processing units (GPUs) to accelerate computation tasks in various applications, including scientific computing, machine learning, and computer vision.CUDA provides a set of programming APIs, libraries, and tools that enable developers to write and execute parallel code on NVIDIA GPUs. It supports popular programming languages like C, C++, and Python, and provides a simple programming model that abstracts away much of the low-level details of GPU architecture.
+
+Using CUDA, developers can exploit the massive parallelism and high computational power of GPUs to accelerate computationally intensive tasks, such as matrix operations, image processing, and deep learning. CUDA has become an important tool for scientific research and is widely used in fields like physics, chemistry, biology, and engineering.
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Steps for Matrix Multiplication using CUDA
+Here are the steps for implementing matrix multiplication using CUDA C:
+1. Matrix Initialization: 
+The first step is to initialize the matrices that you want to multiply. You can use standard C or CUDA functions to allocate memory for the matrices and initialize their values. The matrices are usually represented as 2D arrays.
+
+2. Memory Allocation: 
+The next step is to allocate memory on the host and the device for the matrices. You can use the standard C malloc function to allocate memory on the host and the CUDA function cudaMalloc() to allocate memory on the device.
+
+3. Data Transfer: 
+The third step is to transfer data between the host and the device. You can use the CUDA function cudaMemcpy() to transfer data from the host to the device or vice versa.
+
+4. Kernel Launch: 
+The fourth step is to launch the CUDA kernel that will perform the matrix multiplication on the device. You can use the <<<...>>> syntax to specify the number of blocks and threads to use. Each thread in the kernel will compute one element of the output matrix.
+
+5. Device Synchronization: 
+The fifth step is to synchronize the device to ensure that all kernel executions have completed before proceeding. You can use the CUDA function cudaDeviceSynchronize() to synchronize the device.
+
+6. Data Retrieval: 
+The sixth step is to retrieve the result of the computation from the device to the host. You can use the CUDA function cudaMemcpy() to transfer data from the device to the host.
+
+7. Memory Deallocation: 
+The final step is to deallocate the memory that was allocated on the host and the device. You can use the C free function to deallocate memory on the host and the CUDA function cudaFree() to deallocate memory on the device.
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+Execution of Program over CUDA Environment
+1. Install CUDA Toolkit: 
+First, you need to install the CUDA Toolkit on your system. You can
+download the CUDA Toolkit from the NVIDIA website and follow the installation instructions
+provided.
+
+2. Set up CUDA environment: 
+Once the CUDA Toolkit is installed, you need to set up the CUDA
+environment on your system. This involves setting the PATH and LD_LIBRARY_PATH
+environment variables to the appropriate directories.
+
+3. Write the CUDA program: 
+You need to write a CUDA program that performs the addition of two
+large vectors. You can use a text editor to write the program and save it with a .cu extension.
+
+4. Compile the CUDA program: 
+You need to compile the CUDA program using the nvcc compiler that
+comes with the CUDA Toolkit. The command to compile the program is:
+nvcc -o program_name program_name.cu
+
+5. This will generate an executable program named program_name.
+Run the CUDA program: Finally, you can run the CUDA program by executing the executable file generated in the previous step. The command to run the program is:
+./program_name
