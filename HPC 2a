@@ -2,6 +2,50 @@ Title : BUBBLE SORT
 Write a program to implement Parallel Bubble Sort. Use existing algorithms
 and measure the performance of sequential and parallel algorithms
 
+#include <iostream>
+#include <omp.h>
+#include<bits/stdc++.h>
+
+using namespace std;
+
+void parallel_bubble_sort(int arr[], int n) {
+    #pragma omp parallel
+    {
+   	 int i,j,temp;
+   	 for (j = 0; j < n; j++){
+   	 
+   		 #pragma omp for
+   		 for ( i = 0; i < n-1; i++) {
+       		 if (arr[i] > arr[i+1]) {
+           		 temp = arr[i];
+           		 arr[i] = arr[i+1];
+           		 arr[i+1] = temp;
+           		 
+       		 }
+   		 }
+   	 }
+    }
+}
+
+int main() {
+ int arr[] = {5, 3, 1, 9, 8, 2, 4, 7, 6};
+
+int n=size(arr);
+
+parallel_bubble_sort(arr, n);
+
+    cout << "Sorted array: ";
+for (int i = 0; i < n; i++){
+    cout << arr[i] << " ";    
+    
+}
+    cout << endl;
+
+    return 0;
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
 What is Bubble Sort?
 
 Bubble Sort is a simple sorting algorithm that works by repeatedly swapping adjacent elements if they are
