@@ -2,6 +2,66 @@ HPC 1A - BFS
 Title of the Assignment: Design and implement Parallel Breadth First Search based on existing
 algorithms using OpenMP. Use a Tree or an undirected graph for BFS
 
+#include<bits/stdc++.h>
+#include <iostream>
+#include<omp.h>
+using namespace std;
+struct Graph {
+    int V;
+    list<int> *adj;
+};
+
+void BFS(Graph graph, int source, int *dist) {
+    queue<int> q;
+    bool *visited = new bool[graph.V];
+
+    for(int i = 0; i < graph.V; i++) {
+        visited[i] = false;
+        dist[i] = INT_MAX;
+    }
+
+    visited[source] = true;
+    dist[source] = 0;
+    q.push(source);
+
+    while(!q.empty()) {
+        int u = q.front();
+        q.pop();
+
+        #pragma omp parallel for
+        for(auto v : graph.adj[u]) {
+            if(!visited[v]) {
+                visited[v] = true;
+                dist[v] = dist[u] + 1;
+                q.push(v);
+            }
+        }
+    }
+}
+
+int main() {
+    Graph graph;
+    graph.V = 5;
+    graph.adj = new list<int>[graph.V];
+
+    graph.adj[0].push_back(1);
+    graph.adj[0].push_back(2);
+    graph.adj[1].push_back(2);
+    graph.adj[2].push_back(0);
+    graph.adj[2].push_back(3);
+    graph.adj[3].push_back(3);
+
+    int *dist = new int[graph.V];
+    BFS(graph, 2, dist);
+
+    for(int i = 0; i < graph.V; i++)
+        cout << "Node " << i << " is at distance " << dist[i] << " from the source\n";
+
+    return 0;
+}
+
+------------------------------------------------------------------------------------------------------------------------------
+
 BFS
 BFS stands for Breadth-First Search. It is a graph traversal algorithm used to explore all the nodes of a
 graph or tree systematically, starting from the root node or a specified starting point, and visiting all the
