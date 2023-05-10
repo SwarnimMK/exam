@@ -23,3 +23,17 @@ It’s a Supervised Learning algorithm which goal is to predict continuous, nume
 As a running example, suppose that we wish to estimate the prices of to develop a model for predicting house prices, we need to get our hands on data consisting of sales, including the sales price, area, and age for each home. 
 
 In the terminology of machine learning, the dataset is called a training dataset or training set, and each row (containing the data corresponding to one sale) is called an example (or data point, instance, sample). The thing we are trying to predict (price) is called a label (or target). The variables (age and area) upon which the predictions houses (in dollars) based on their area (in square feet) and age (in years) are based are called features (or covariates).
+
+DATA COLLECTION
+This Dataset consist several features such as Number of Rooms, Crime Rate, and Tax and so on. Let’s know about how to read the dataset into the Jupyter Notebook. You can download the dataset from Kaggle in csv file format.
+
+DATA PREPROCESSING
+In this Boston Dataset we need not to clean the data. The dataset already cleanedwhen we download from the Kaggle. For your satisfaction i will show to numberof null or missing values in the dataset. As well as we need to understand shape of the dataset.
+
+EXPLORATORY DATA ANALYSIS
+In statistics, exploratory data analysis (EDA) is an approach to analyzing data setsto summarize their main characteristics, often with visual methods. A statistical model can be used or not, but primarily EDA is for seeing what the data can tell us beyond the formal modeling or hypothesis testing task.
+
+Feature Selection: It is the process where you automatically or manually select those features which contribute most to your prediction variable or output in which you are interested in. Havingirrelevantfeaturesinyourdatacandecreasetheaccuracyofthe models and makeyour model learn based on irrelevant features.
+
+Conclusion: 
+And thus, we have successfully implemented model using Linear Regression.
