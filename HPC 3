@@ -1,0 +1,44 @@
+HPC 3
+
+Title:
+Implement Min, Max, Sum and Average operations using Parallel Reduction.
+
+Theory:
+
+OpenMP is a set of C/C++ pragmas (or FORTRAN equivalents) which provide the programmer a high-level front-end interface which get translated as calls to threads (or other similar entities). The key phrase here is "higher-level"; the goal is to better enable the programmer to "think parallel," alleviating him/her of the burden and distraction of dealing withsetting up and coordinating threads. For example, the OpenMP directive.
+
+Parallel Programming:
+There are two fundamental types of parallelism in applications: 
+➤Task parallelism
+Task parallelism arises when there are many tasks or functions that can be operated independently and largely in parallel. Task parallelism focuses on distributing functions across multiple cores.
+
+➤Data parallelism
+Data parallelism arises when there are many data items that can be operated on at the same time.Data parallelism focuses on distributing the data across multiple cores.
+
+CUDA:
+CUDA programming is especially well-suited to address problems that can be expressedas data-parallel computations. Any applications that process large data sets can use a data- parallel model to speed up the computations. Data-parallel processing maps data elements to parallel threads. The first step in designing a data parallel program is to partition data across threads, with each thread working on a portion of the data.
+
+CUDA Architecture:
+A heterogeneous application consists of two parts: 
+➤Host code
+➤Device code
+
+Host code runs on CPUs and device code runs on GPUs. An application executing on a heterogeneous platform is typically initialized by the CPU. The CPU code is responsible for managing the environment, code, and data for the device before loading compute-intensive taskson the device. With computational intensive applications, program sections often exhibit a rich amount of data parallelism. GPUs are used to accelerate the execution of this portion of data parallelism. When a hardware component that is physically separate from the CPU is used to accelerate computationally intensive sections of an application, it is referred to as a hardware accelerator. GPUs are arguably the most common example of a hardware accelerator. GPUs must operate in conjunction with a CPU-based host through a PCI-Express bus, as shown in Figure.
+
+NVIDIA’s CUDA nvcc compiler separates the device code from the host code during the compilation process. The device code is written using CUDA C extended with keywords for labeling data-parallel functions, called kernels . The device code is further compiled by Nvcc. During the link stage, CUDA runtime libraries are added for kernel procedure calls and explicit GPU device manipulation. Further kernel function, named hello From GPU, to print the string of“Hello World from GPU!” as follows:
+
+global void hello From GPU(void) {
+printf(“Hello World from GPU!\n”);
+}
+
+Launch the kernel function with the following code:
+Hello From GPU <<<1,10>>>();
+In this example, you will run 10 GPU threads.
+
+A typical processing flow of a CUDA program follows this pattern: 
+1.Copy data from CPU memory to GPU memory.
+2.Invoke kernels to operate on the data stored in GPU memory. 
+3.Copy data back from GPU memory to CPU memory.
+
+Conclusion: 
+We have implemented parallel reduction using Min, Max, Sum and Average Operations. We have implemented CUDA program for calculating Min, Max, Arithmetic mean and Standard deviation Operations on N-element vector.
