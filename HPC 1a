@@ -1,0 +1,69 @@
+HPC 1A - BFS
+Title of the Assignment: Design and implement Parallel Breadth First Search based on existing
+algorithms using OpenMP. Use a Tree or an undirected graph for BFS
+
+BFS
+BFS stands for Breadth-First Search. It is a graph traversal algorithm used to explore all the nodes of a
+graph or tree systematically, starting from the root node or a specified starting point, and visiting all the
+neighboring nodes at the current depth level before moving on to the next depth level.
+The algorithm uses a queue data structure to keep track of the nodes that need to be visited, and marks
+each visited node to avoid processing it again. The basic idea of the BFS algorithm is to visit all the
+nodes at a given level before moving on to the next level, which ensures that all the nodes are visited in
+breadth-first order.
+
+BFS is commonly used in many applications, such as finding the shortest path between two nodes,
+solving puzzles, and searching through a tree or graph.
+
+Example of BFS
+Now let’s take a look at the steps involved in traversing a graph by using Breadth-First Search:
+Step 1: Take an Empty Queue.
+Step 2: Select a starting node (visiting a node) and insert it into the Queue.
+Step 3: Provided that the Queue is not empty, extract the node from the Queue and insert its child nodes
+(exploring a node) into the Queue.
+Step 4: Print the extracted node.
+
+Concept of OpenMP
+● OpenMP (Open Multi-Processing) is an application programming interface (API) that supports
+shared-memory parallel programming in C, C++, and Fortran. It is used to write parallel programs
+that can run on multicore processors, multiprocessor systems, and parallel computing clusters.
+
+● OpenMP provides a set of directives and functions that can be inserted into the source code of a
+program to parallelize its execution. These directives are simple and easy to use, and they can be
+applied to loops, sections, functions, and other program constructs. The compiler then generates
+parallel code that can run on multiple processors concurrently.
+
+● OpenMP programs are designed to take advantage of the shared-memory architecture of modern
+processors, where multiple processor cores can access the same memory. OpenMP uses a fork-join
+model of parallel execution, where a master thread forks multiple worker threads to execute a
+parallel region of the code, and then waits for all threads to complete before continuing with the
+sequential part of the code.
+
+● OpenMP is widely used in scientific computing, engineering, and other fields that require
+high-performance computing. It is supported by most modern compilers and is available on a wide
+range of platforms, including desktops, servers, and supercomputers.
+
+How Parallel BFS Work
+● Parallel BFS (Breadth-First Search) is an algorithm used to explore all the nodes of a graph or tree
+systematically in parallel. It is a popular parallel algorithm used for graph traversal in distributed
+computing, shared-memory systems, and parallel clusters.
+● The parallel BFS algorithm starts by selecting a root node or a specified starting point, and then
+assigning it to a thread or processor in the system. Each thread maintains a local queue of nodes to be
+visited and marks each visited node to avoid processing it again.
+● The algorithm then proceeds in levels, where each level represents a set of nodes that are at a certain
+distance from the root node. Each thread processes the nodes in its local queue at the current level,
+and then exchanges the nodes that are adjacent to the current level with other threads or processors.
+This is done to ensure that the nodes at the next level are visited by the next iteration of the
+algorithm.
+● The parallel BFS algorithm uses two phases: the computation phase and the communication phase. In
+the computation phase, each thread processes the nodes in its local queue, while in the
+communication phase, the threads exchange the nodes that are adjacent to the current level with other
+threads or processors.
+● The parallel BFS algorithm terminates when all nodes have been visited or when a specified node has
+been found. The result of the algorithm is the set of visited nodes or the shortest path from the root
+node to the target node.
+● Parallel BFS can be implemented using different parallel programming models, such as OpenMP,
+MPI, CUDA, and others. The performance of the algorithm depends on the number of threads or
+processors used, the size of the graph, and the communication overhead between the threads or
+processors.
+
+Conclusion- In this way we can achieve parallelism while implementing BFS
