@@ -1,0 +1,102 @@
+Title : BUBBLE SORT
+Write a program to implement Parallel Bubble Sort. Use existing algorithms
+and measure the performance of sequential and parallel algorithms
+
+What is Bubble Sort?
+
+Bubble Sort is a simple sorting algorithm that works by repeatedly swapping adjacent elements if they are
+in the wrong order. It is called "bubble" sort because the algorithm moves the larger elements towards the
+end of the array in a manner that resembles the rising of bubbles in a liquid.
+
+The basic algorithm of Bubble Sort is as follows:
+1. Start at the beginning of the array.
+2. Compare the first two elements. If the first element is greater than the second element, swap them.
+3. Move to the next pair of elements and repeat step 2.
+4. Continue the process until the end of the array is reached.
+5. If any swaps were made in step 2-4, repeat the process from step 1.
+
+The time complexity of Bubble Sort is O(n^2), which makes it inefficient for large lists. However, it
+has the advantage of being easy to understand and implement, and it is useful for educational purposes
+and for sorting small datasets.
+
+Bubble Sort has limited practical use in modern software development due to its inefficient time
+complexity of O(n^2) which makes it unsuitable for sorting large datasets. However, Bubble Sort has
+some advantages and use cases that make it a valuable algorithm to understand, such as:
+
+1. Simplicity: 
+Bubble Sort is one of the simplest sorting algorithms, and it is easy to understand and
+implement. It can be used to introduce the concept of sorting to beginners and as a basis for more
+complex sorting algorithms.
+
+2. Educational purposes: 
+Bubble Sort is often used in academic settings to teach the principles of
+sorting algorithms and to help students understand how algorithms work.
+
+3. Small datasets: 
+For very small datasets, Bubble Sort can be an efficient sorting algorithm, as its
+overhead is relatively low.
+
+4. Partially sorted datasets: 
+If a dataset is already partially sorted, Bubble Sort can be very efficient.
+Since Bubble Sort only swaps adjacent elements that are in the wrong order, it has a low number
+of operations for a partially sorted dataset.
+
+5. Performance optimization: 
+Although Bubble Sort itself is not suitable for sorting large datasets,
+some of its techniques can be used in combination with other sorting algorithms to optimize their
+performance. For example, Bubble Sort can be used to optimize the performance of Insertion
+Sort by reducing the number of comparisons needed.
+
+Concept of OpenMP
+● OpenMP (Open Multi-Processing) is an application programming interface (API) that supports
+shared-memory parallel programming in C, C++, and Fortran. It is used to write parallel
+programs that can run on multicore processors, multiprocessor systems, and parallel computing
+clusters.
+● OpenMP provides a set of directives and functions that can be inserted into the source code of a
+program to parallelize its execution. These directives are simple and easy to use, and they can be
+applied to loops, sections, functions, and other program constructs. The compiler then generates
+parallel code that can run on multiple processors concurrently.
+● OpenMP programs are designed to take advantage of the shared-memory architecture of modern processors, where multiple processor cores can access the same memory. OpenMP uses a
+fork-join model of parallel execution, where a master thread forks multiple worker threads to
+execute a parallel region of the code, and then waits for all threads to complete before continuing
+with the sequential part of the code.
+
+How Parallel Bubble Sort Work
+● Parallel Bubble Sort is a modification of the classic Bubble Sort algorithm that takes advantage of
+parallel processing to speed up the sorting process.
+● In parallel Bubble Sort, the list of elements is divided into multiple sublists that are sorted
+concurrently by multiple threads. Each thread sorts its sublist using the regular Bubble Sort
+algorithm. When all sublists have been sorted, they are merged together to form the final sorted
+list.
+● The parallelization of the algorithm is achieved using OpenMP, a programming API that supports
+parallel processing in C++, Fortran, and other programming languages. OpenMP provides a set of
+compiler directives that allow developers to specify which parts of the code can be executed in
+parallel.
+ In the parallel Bubble Sort algorithm, the main loop that iterates over the list of elements is
+divided into multiple iterations that are executed concurrently by multiple threads. Each thread
+sorts a subset of the list, and the threads synchronize their work at the end of each iteration to
+ensure that the elements are properly ordered.
+● Parallel Bubble Sort can provide a significant speedup over the regular Bubble Sort algorithm,
+especially when sorting large datasets on multi-core processors. However, the speedup is limited
+by the overhead of thread creation and synchronization, and it may not be worth the effort for
+small datasets or when using a single-core processor
+
+How to check CPU utilization and memory consumption in ubuntu
+In Ubuntu, you can use a variety of tools to check CPU utilization and memory consumption. Here are
+some common tools:
+1. top: The top command provides a real-time view of system resource usage, including CPU
+utilization and memory consumption. To use it, open a terminal window and type top. The output
+will display a list of processes sorted by resource usage, with the most resource-intensive
+processes at the top.
+2. htop: htop is a more advanced version of top that provides additional features, such as interactive
+process filtering and a color-coded display. To use it, open a terminal window and type htop.
+3. ps: The ps command provides a snapshot of system resource usage at a particular moment in time.
+To use it, open a terminal window and type ps aux. This will display a list of all running processes
+and their resource usage.
+4. free: The free command provides information about system memory usage, including total, used,
+and free memory. To use it, open a terminal window and type free -h.
+5. vmstat: The vmstat command provides a variety of system statistics, including CPU utilization,
+memory usage, and disk activity. To use it, open a terminal window and type vmstat.
+
+Conclusion- In this way we can implement Bubble Sort in parallel way using OpenMP also
+come to know how to how to measure performance of serial and parallel algorithm
