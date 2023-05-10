@@ -1,1 +1,55 @@
+Assignment 3
+Tittle: Convolutional neural network (CNN). Use any dataset of plant diseaseand design a
+plant disease detection system using CNN.
 
+Aim: To implement plant disease and design a plant disease detection systemusing CNN 
+
+Theory:
+Agricultural production is a very old means of obtaining food. It is a vital sourceof income for people all around the world. No one can exist in our world withoutfood. Plants are crucial not only for humans, but also for animals who rely on them for food, oxygen, and other necessities. The government and experts are taking significant initiatives to enhance food production, and they are working successfully in the real world. When a plant becomes afflicted with a disease, allliving organisms in the environment are affected in some way. This plant diseasecan affect anywhere on the plant, including the stem, leaf, and branch. Even the types of illnesses that impact plants, such as bacterial and fungal diseases .etc. can differ. The illness that impacts the crops will be determined by factors such as climate. There are a large number of people that are food insecure. This occursas a result of insufficient food crop output.
+
+The goal of study of Leaf Disease Classification using Artificial Neural. Networkis to acquire and analyse data from leaf photos in order to determine healthy or diseased leaves of medical plants using image processing methods. To extract pictures and get data, an algorithm of adjusted contrast, segmentation, and features extraction is employed from the image processing approach. The Artificial Neural Network was used to analyse the findings of the experiment.
+
+The architecture of the network used to classify healthy or unhealthy leaves is multilayer feed- forward Neural Networks, which are multilayer perceptron and radial basis function RBF. The end outcome of the experiment demonstrates thatthe RBF network outperforms the MLP network. At present, the conventional technique of visual inspection in humans by visual inspection makes it impossibleto characterize plant diseases. Advances in computer vision models offer fast, normalized, and accurate answers to these problems. Classifiers can also be sentas attachments during preparation.
+
+CNN
+A Convolutional Neural Network (CNN) is a Deep Learning algorithm that cantake in an input image, assign importance (learnable weights and biases) to variousaspects/objects in the image, and be able to differentiate one from the other. Thepre-processing required in a ConvNet is much lower as compared to other classification algorithms. While in primitive methods filters are hand-engineered, with enough training, ConvNets have the ability to learn these filters/characteristics. he objective of the Convolution Operation is to extract thehigh-level features such as edges, from the input image. ConvNets need not be limited to only one Convolutional Layer. Conventionally, the first ConvLayer isresponsible for capturing the Low-Level features such as edges, color, gradient orientation, etc.
+
+Convolutional neural networks are distinguished from other neural networks by their superior performance with image, speech, or audio signal inputs. They havethree main types of layers, which are:
+ Convolutional layer
+ Pooling layer
+ Fully-connected (FC) layer
+
+let’s take an example by running a covnets on of image of dimension 32 x 32 x 3.
+
+1. Input Layer: 
+This layer holds the raw input of the image with width 32, height 32, and depth 3.
+
+2. Convolution Layer: 
+This layer computes the output volume by computing the dot product between all filters and image patches. Suppose we use a totalof 12 filters for this layer we’ll get output volume of dimension 32 x 32 x 12.
+
+3. Activation Function Layer: 
+This layer will apply an element-wise activation function to the output of the convolution layer. Some common activation functions are RELU: max(0, x), Sigmoid: 1/(1+e^-x), Tanh, LeakyRELU, etc. The volume remains unchanged hence output volume will have dimension 32 x 32 x 12.
+
+4. Pool Layer: 
+This layer is periodically inserted in the covnets and its main function is to reduce the size of volume which makes the computation fast reduces memory and also prevents overfitting. Two common types of pooling layers are max pooling and average pooling. If we use a max pool with 2 x 2 filters and stride 2, the resultant volume will be of dimension 16x16x12.
+
+Convolutional neural networks (CNN) are one of the most popular models used today. This neural network computational model uses a variation of multilayer perceptrons and contains one or more convolutional layers that can be either entirely connected or pooled. These convolutional layers create feature mapsthat record a region of image which is ultimately broken into rectangles and sentout for nonlinear
+processing.
+
+ADVANTAGES
+ Very High accuracy in image recognition problems.
+ Automatically detects the important features without any human supervision.
+ Weight sharing.
+
+Disadvantages:
+ CNN do not encode the position and orientation of object.
+ Lack of ability to be spatially invariant to the input data.
+ Lots of training data is required.
+
+APPLICATIONS
+ Marketing: Social media platforms provide suggestions on who mightbe in photograph that has been posted on a profile, making it easier to tag friends in photo albums.
+ Healthcare: Computer vision has been incorporated into radiology technology, enabling doctors to better identify cancerous tumors in healthy anatomy.
+ Retail: Visual search has been incorporated into some e-commerce platforms, allowing brands to recommend items that would complement an existing wardrobe.
+
+Conclusion:
+We are successful in creating disease classification techniques used for plant leaf disease detection.
