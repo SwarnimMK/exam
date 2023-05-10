@@ -1,0 +1,61 @@
+HPC 2b - Parallel Merge Sort
+Title of the Assignment: Write a program to implement Parallel Merge Sort. Use existing algorithms
+and measure the performance of sequential and parallel algorithms.
+
+What is Merge Sort?
+Merge sort is a sorting algorithm that uses a divide-and-conquer approach to sort an array or a list of
+elements. The algorithm works by recursively dividing the input array into two halves, sorting each half,
+and then merging the sorted halves to produce a sorted output.
+
+The merge sort algorithm can be broken down into the following steps:
+1. Divide the input array into two halves.
+2. Recursively sort the left half of the array.
+3. Recursively sort the right half of the array.
+4. Merge the two sorted halves into a single sorted output array.
+
+● The merging step is where the bulk of the work happens in merge sort. The algorithm compares
+the first elements of each sorted half, selects the smaller element, and appends it to the output
+array. This process continues until all elements from both halves have been appended to the output
+array.
+
+● The time complexity of merge sort is O(n log n), which makes it an efficient sorting algorithm for
+large input arrays. However, merge sort also requires additional memory to store the output array,
+which can make it less suitable for use with limited memory resources.
+
+● In simple terms, we can say that the process of merge sort is to divide the array into two halves,
+sort each half, and then merge the sorted halves back together. This process is repeated until the
+entire array is sorted.
+
+● One thing that you might wonder is what is the specialty of this algorithm. We already have a
+number of sorting algorithms then why do we need this algorithm? One of the main advantages of
+merge sort is that it has a time complexity of O(n log n), which means it can sort large arrays
+relatively quickly. It is also a stable sort, which means that the order of elements with equal values
+is preserved during the sort.
+
+● Merge sort is a popular choice for sorting large datasets because it is relatively efficient and easy
+to implement. It is often used in conjunction with other algorithms, such as quicksort, to improve
+the overall performance of a sorting routine.
+
+How Parallel Merge Sort Work
+● Parallel merge sort is a parallelized version of the merge sort algorithm that takes advantage of
+multiple processors or cores to improve its performance. In parallel merge sort, the input array is
+divided into smaller subarrays, which are sorted in parallel using multiple processors or cores.
+The sorted subarrays are then merged together in parallel to produce the final sorted output.
+● The parallel merge sort algorithm can be broken down into the following steps:
+1. Divide the input array into smaller subarrays.
+2. Assign each subarray to a separate processor or core for sorting.
+3. Sort each subarray in parallel using the merge sort algorithm.
+4.  Merge the sorted subarrays together in parallel to produce the final sorted output.
+5.  The merging step in parallel merge sort is performed in a similar way to the merging step in the
+sequential merge sort algorithm. However, because the subarrays are sorted in parallel, the
+merging step can also be performed in parallel using multiple processors or cores. This can
+significantly reduce the time required to merge the sorted subarrays and produce the final output.
+
+● Parallel merge sort can provide significant performance benefits for large input arrays with many
+elements, especially when running on hardware with multiple processors or cores. However, it
+also requires additional overhead to manage the parallelization, and may not always provide
+performance improvements for smaller input sizes or when run on hardware with limited parallel
+processing capabilities.
+
+Conclusion- In this way we can implement Merge Sort in parallel way using OpenMP also come
+to know how to how to measure performance of serial and parallel algorithm
