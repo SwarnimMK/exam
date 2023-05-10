@@ -3,6 +3,69 @@ HPC 3
 Title:
 Implement Min, Max, Sum and Average operations using Parallel Reduction.
 
+#include <iostream>
+#include <omp.h>
+#include <climits>
+using namespace std;
+void min_reduction(int arr[], int n) {
+  int min_value = INT_MAX;
+  #pragma omp parallel for reduction(min: min_value)
+  for (int i = 0; i < n; i++) {
+	if (arr[i] < min_value) {
+  	min_value = arr[i];
+	}
+  }
+  cout << "Minimum value: " << min_value << endl;
+}
+
+void max_reduction(int arr[], int n) {
+  int max_value = INT_MIN;
+  #pragma omp parallel for reduction(max: max_value)
+  for (int i = 0; i < n; i++) {
+	if (arr[i] > max_value) {
+  	max_value = arr[i];
+	}
+  }
+  cout << "Maximum value: " << max_value << endl;
+}
+
+void sum_reduction(int arr[], int n) {
+  int sum = 0;
+   #pragma omp parallel for reduction(+: sum)
+   for (int i = 0; i < n; i++) {
+	sum += arr[i];
+  }
+  cout << "Sum: " << sum << endl;
+}
+
+void average_reduction(int arr[], int n) {
+  int sum = 0;
+  #pragma omp parallel for reduction(+: sum)
+  for (int i = 0; i < n; i++) {
+	sum += arr[i];
+  }
+  cout << "Average: " << (double)sum / (n-1) << endl;
+}
+
+int main() {
+    int *arr,n;
+    cout<<"\n Enter total no of elements=> ";
+    cin>>n;
+    arr=new int[n];
+    cout<<"\n Enter elements=>";
+    for(int i=0;i<n;i++)
+    {
+   	 cin>>arr[i];
+    }
+
+  min_reduction(arr, n);
+  max_reduction(arr, n);
+  sum_reduction(arr, n);
+  average_reduction(arr, n);
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
 Theory:
 
 OpenMP is a set of C/C++ pragmas (or FORTRAN equivalents) which provide the programmer a high-level front-end interface which get translated as calls to threads (or other similar entities). The key phrase here is "higher-level"; the goal is to better enable the programmer to "think parallel," alleviating him/her of the burden and distraction of dealing withsetting up and coordinating threads. For example, the OpenMP directive.
