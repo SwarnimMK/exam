@@ -5,71 +5,120 @@ Title: Linear regression by using Deep Neural network: Implement Boston housing 
 
 Aim: To implement Boston housing price prediction using linear regression
 
-# Importing Necesarry Packages
-import numpy as np
+1
 import pandas as pd
+import numpy as np
+from tensorflow import keras
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.datasets import load_boston
+
+2
+data = pd.read_csv("housing.csv")
+
+3
+data
+
+4
+column_names = ['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'B', 'LSTAT', 'MEDV']
+df = pd.read_csv('housing.csv', header=None, delimiter=r'\s+', names=column_names)
+df
+
+5
+df.describe().T
+
+6
+df.isnull().sum()
+
+7
+df.isnull().values.any()
+
+8
+plt.figure(figsize=(10, 8))
+sns.heatmap(df.corr(), annot=True, cmap='coolwarm')
+plt.title('Correlation Heatmap')
+plt.show()
+
+9
+X = df.drop('MEDV', axis=1)
+y = df['MEDV']
+
+10
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import r2_score
-from sklearn.metrics import mean_squared_error
-import keras
-from keras.layers import Dense, Activation,Dropout
-from keras.models import Sequential
-import warnings
-warnings.filterwarnings("ignore") 
+from sklearn.neural_network import MLPRegressor
+from sklearn.metrics import mean_squared_error, r2_score
 
-# Loading Data
-boston = load_boston()
-data = pd.DataFrame(boston.data)
-data.columns = boston.feature_names
-data['PRICE'] = boston.target 
-data.head()
+11
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Data Exploration
-print(data.shape)
-print(data.dtypes)
-print(data.isnull().sum())
-print(data.describe())
+# Scale the data using StandardScaler
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
 
-# Data Visualization
-sns.displot(data.PRICE)
-correlation = data.corr()
-correlation.loc['PRICE']
-fig,axes = plt.subplots(figsize=(15,12))
-sns.heatmap(correlation,square = True,annot = True)
+12
+model = MLPRegressor(hidden_layer_sizes=(100, 50), activation='relu', random_state=42)
+model.fit(X_train_scaled, y_train)
 
-# Splitting Data into testing and training data
-X = data.iloc[:,:-1]
-y= data.PRICE
-X_train, X_test, y_train, y_test = train_test_split(X,y, test_size = 0.2, random_state = 4)
+# Predict on the test set
+y_pred = model.predict(X_test_scaled)
 
-# Normalizing the data
-sc = StandardScaler()
-X_train = sc.fit_transform(X_train)
-X_test = sc.transform(X_test)
+# Evaluate the model
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
 
-# Model Building
+print("Mean Squared Error:", mse)
+print("R2 Score:", r2)
+
+13
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Scale the data using StandardScaler
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+14
+from tensorflow import keras
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+
+15
 model = Sequential()
-model.add(Dense(128,activation  = 'relu',input_dim =13))
-model.add(Dense(64,activation  = 'relu'))
-model.add(Dense(32,activation  = 'relu'))
-model.add(Dense(16,activation  = 'relu'))
+model.add(Dense(100, activation='relu', input_shape=(X_train_scaled.shape[1],)))
+model.add(Dense(50, activation='relu'))
 model.add(Dense(1))
-model.compile(optimizer = 'adam',loss = 'mean_squared_error')
+
+# Compile the model
+model.compile(loss='mean_squared_error', optimizer='adam')
+
+# Train the model
+history = model.fit(X_train_scaled, y_train, epochs=100, batch_size=32, validation_data=(X_test_scaled, y_test), verbose=0)
+
+16
+plt.figure(figsize=(10, 6))
+plt.plot(history.history['loss'], label='Training Loss')
+plt.plot(history.history['val_loss'], label='Validation Loss')
+plt.title('Training and Validation Loss')
+plt.xlabel('Epochs')
+plt.ylabel('Loss')
+plt.legend()
+plt.show()
+
+# Predict on the test set
+y_pred = model.predict(X_test_scaled)
+
+# Calculate metrics
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print("Mean Squared Error:", mse)
+print("R2 Score:", r2)
+
+17
 model.summary()
 
-# Fitting the data to the model
-model.fit(X_train, y_train, epochs = 100)
 
-# Evaluating the model
-y_pred = model.predict(X_test)
-r2 = r2_score(y_test, y_pred)
-rmse = (np.sqrt(mean_squared_error(y_test, y_pred)))
-print("R2 Score = ", r2)
-print("RMSE Score = ", rmse)
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
