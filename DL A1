@@ -13,12 +13,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 2
-data = pd.read_csv("housing.csv")
+df = pd.read_csv("housing.csv")
 
 3
-data
+df
 
-4
+4 ##optional
 column_names = ['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'B', 'LSTAT', 'MEDV']
 df = pd.read_csv('housing.csv', header=None, delimiter=r'\s+', names=column_names)
 df
@@ -39,8 +39,8 @@ plt.title('Correlation Heatmap')
 plt.show()
 
 9
-X = df.drop('MEDV', axis=1)
-y = df['MEDV']
+X = df.drop('medv', axis=1)
+y = df['medv']
 
 10
 from sklearn.model_selection import train_test_split
