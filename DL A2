@@ -4,6 +4,7 @@ Title: Binary classification using Deep Neural Networks Example: Classify movie 
 Aim: 
 To implement movie reviews into positive" reviews and "negative" reviews, just based on the text content of the reviews.
 
+1
 from keras.datasets import imdb
 %matplotlib inline
 import numpy as np
@@ -14,6 +15,7 @@ import seaborn as sns
 import os
 import time
 
+2
 from keras.preprocessing import sequence
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation
@@ -22,10 +24,12 @@ from keras.layers import Conv1D, GlobalMaxPooling1D
 from keras.callbacks import EarlyStopping
 from keras import models
 
+3
 (X_train, y_train), (X_test, y_test) = imdb.load_data()
 X = np.concatenate((X_train, X_test), axis=0)
 y = np.concatenate((y_train, y_test), axis=0)
 
+4
 ##training data shape review
 print("Training data: ")
 print(X.shape)
@@ -33,9 +37,11 @@ print(y.shape)
 print("Classes: ")
 print(np.unique(y))
 
+5
 print("Number of words: ")
 print(len(np.unique(np.hstack(X))))
 
+6
 print("Review length: ")
 result = [len(x) for x in X]
 print("Mean %.2f words (%f)" % (np.mean(result), np.std(result)))
@@ -43,8 +49,10 @@ print("Mean %.2f words (%f)" % (np.mean(result), np.std(result)))
 plt.boxplot(result)
 plt.show()
 
+7
 (train_data, train_labels), (test_data, test_labels) = imdb.load_data(num_words=5000)
 
+8
 def vectorize_sequences(sequences, dimension=5000):
     # Create an all-zero matrix of shape (len(sequences), dimension)
     results = np.zeros((len(sequences), dimension))
@@ -52,15 +60,18 @@ def vectorize_sequences(sequences, dimension=5000):
         results[i, sequence] = 1.  # set specific indices of results[i] to 1s
     return results
 
+9
 # Our vectorized training data
 x_train = vectorize_sequences(train_data)
 # Our vectorized test data
 x_test = vectorize_sequences(test_data)
 
+10
 # Our vectorized labels one-hot encoder
 y_train = np.asarray(train_labels).astype('float32')
 y_test = np.asarray(test_labels).astype('float32')
 
+11
 from keras import layers
 from keras import models
 model = models.Sequential()
@@ -68,16 +79,19 @@ model.add(layers.Dense(32, activation='relu', input_shape=(5000,)))
 model.add(layers.Dense(32, activation='relu',))
 model.add(layers.Dense(1, activation='sigmoid'))
 
+12
 #Set validation set aside
 x_val = x_train[:10000]
 partial_x_train = x_train[10000:]
 y_val = y_train[:10000]
 partial_y_train = y_train[10000:]
 
+13
 model.compile(optimizer='adam',
               loss='binary_crossentropy',
               metrics=['acc'])
-              
+
+14
 start_time_m1 = time.time()
 history = model.fit(partial_x_train,
                     partial_y_train,
@@ -86,18 +100,26 @@ history = model.fit(partial_x_train,
                     validation_data=(x_val, y_val))
 total_time_m1 = time.time() - start_time_m1
 
+
+15
 print("The Dense Convolutional Neural Network 1 layer took %.4f seconds to train." % (total_time_m1))
 
+
+16
 history_dict = history.history
 history_dict.keys()
 
+17
 import matplotlib.pyplot as plt
 %matplotlib inline
+
 acc = history.history['acc']
 val_acc = history.history['val_acc']
 loss = history.history['loss']
 val_loss = history.history['val_loss']
+
 epochs = range(1, len(acc) + 1)
+
 # "bo" is for "blue dot"
 plt.plot(epochs, loss, 'bo', label='Training loss')
 # b is for "solid blue line"
@@ -106,11 +128,15 @@ plt.title('Training and validation loss')
 plt.xlabel('Epochs')
 plt.ylabel('Loss')
 plt.legend()
+
 plt.show()
 
+
+18
 plt.clf()   # clear figure
 acc_values = history_dict['acc']
 val_acc_values = history_dict['val_acc']
+
 plt.plot(epochs, acc, 'bo', label='Training acc')
 plt.plot(epochs, val_acc, 'b', label='Validation acc')
 plt.title('Training and validation accuracy')
@@ -119,8 +145,10 @@ plt.ylabel('Loss')
 plt.legend()
 plt.show()
 
+19
 model.summary()
 
+20
 from sklearn.metrics import confusion_matrix, accuracy_score, auc
 #predictions
 pred = model.predict(x_test)
@@ -128,6 +156,7 @@ classes_x=np.argmax(pred,axis=1)
 #accuracy
 accuracy_score(y_test,classes_x)
 
+21
 #Confusion Matrix
 conf_mat = confusion_matrix(y_test, classes_x)
 print(conf_mat)
@@ -136,6 +165,7 @@ sns.heatmap(conf_mat_normalized)
 plt.ylabel('True label')
 plt.xlabel('Predicted label')
 
+22
 #Dense with Two Layer
 model2 = models.Sequential()
 model2.add(layers.Dense(32, activation='relu', input_shape=(5000,)))
@@ -143,10 +173,12 @@ model2.add(layers.Dense(32, activation='relu'))
 model2.add(layers.Dense(32, activation='relu'))
 model2.add(layers.Dense(1, activation='sigmoid'))
 
+23
 model2.compile(optimizer='adam',
               loss='binary_crossentropy',
               metrics=['acc'])
-              
+ 
+ 24
 start_time_m2 = time.time()
 history= model2.fit(partial_x_train,
                     partial_y_train,
@@ -154,13 +186,17 @@ history= model2.fit(partial_x_train,
                     batch_size=512,
                     validation_data=(x_val, y_val))
 total_time_m2 = time.time() - start_time_m2
+
 print("The Dense Convolutional Neural Network 2 layers took %.4f seconds to train." % (total_time_m2))
 
+25
 acc = history.history['acc']
 val_acc = history.history['val_acc']
 loss = history.history['loss']
 val_loss = history.history['val_loss']
+
 epochs = range(1, len(acc) + 1)
+
 # "bo" is for "blue dot"
 plt.plot(epochs, loss, 'bo', label='Training loss')
 # b is for "solid blue line"
@@ -169,21 +205,28 @@ plt.title('DNN 2 layer Training and validation loss')
 plt.xlabel('Epochs')
 plt.ylabel('Loss')
 plt.legend()
+
 plt.show()
 
+26
 plt.clf()   # clear figure
 acc_values = history_dict['acc']
 val_acc_values = history_dict['val_acc']
+
 plt.plot(epochs, acc, 'bo', label='Training acc')
 plt.plot(epochs, val_acc, 'b', label='Validation acc')
 plt.title('DNN 2 layer Training and validation accuracy')
 plt.xlabel('Epochs')
 plt.ylabel('Loss')
 plt.legend()
+
 plt.show()
 
+27
 model2.summary()
 
+
+28
 from numpy.ma.core import argmax
 pred = model2.predict(x_test)
 classes_x=argmax(pred,axis=-1)
