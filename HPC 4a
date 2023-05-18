@@ -3,70 +3,197 @@ HPC 4a
 Title:
 Write a CUDA Program for Addition of two large vectors
 
+1
+!nvcc --version
 
-#include <iostream>  
-#include <cuda_runtime.h>
-#include /usr/local/cuda/include/cuda_runtime.h
+2
+code = """
+#include<iostream>
+#include<math.h>
 
-_global_void addVectors(int* A, int* B, int* C, int n)
-{
-	int i = blockIdx.x * blockDim.x + threadIdx.x;
-	if (i < n)
-	{
-    	C[i] = A[i] + B[i];
-	}
+#define n 8
+
+using namespace std;
+
+__global__ void minimum(int *input) {
+    int tid = threadIdx.x;
+    int step_size = 1;
+    int number_of_threads = blockDim.x;
+    
+    printf("No of threads = %d", number_of_threads);
+    
+    while(number_of_threads>0) {
+        if(tid < number_of_threads) {
+            int first = tid*step_size*2;
+            int second = first + step_size;
+            if(input[second] < input[first])
+              input[first] = input[second];
+        }
+        step_size <<= 1;
+        number_of_threads >>= 1;
+    }
 }
 
-int main()
-{
-	int n = 1000000;  
-	int* A, * B, * C;
-	int size = n * sizeof(int);
-
-	// Allocate memory on the host  
-	cudaMallocHost(&A, size);  
-	cudaMallocHost(&B, size);  
-	cudaMallocHost(&C, size);
-
-	// Initialize the vectors
-	for (int i = 0; i < n; i++)
-	{
-    	A[i] = i;
-    	B[i] = i * 2;
-	}
-	// Allocate memory on the device  
-	int* dev_A, * dev_B, * dev_C;  
-	cudaMalloc(&dev_A, size);  
-	cudaMalloc(&dev_B, size);  
-	cudaMalloc(&dev_C, size);
-
-	// Copy data from host to device
-	cudaMemcpy(dev_A, A, size, cudaMemcpyHostToDevice);  
-	cudaMemcpy(dev_B, B, size, cudaMemcpyHostToDevice);
-
-	// Launch the kernel  
-	int blockSize = 256;
-	int numBlocks = (n + blockSize - 1) / blockSize;
-	// Copy data from device to host
-	cudaMemcpy(C, dev_C, size, cudaMemcpyDeviceToHost);
-
-	// Print the results
-	for (int i = 0; i < 10; i++)
-	{
-    	cout << C[i] << " ";
-	}
-	cout << endl;
-
-	// Free memory  
-	cudaFree(dev_A);  
-	cudaFree(dev_B);  
-	cudaFree(dev_C);  
-	cudaFreeHost(A);  
-	cudaFreeHost(B);  
-	cudaFreeHost(C);
-
-	return 0;
+__global__ void maximum(int *input) {
+    int tid = threadIdx.x;
+    int step_size = 1;
+    int number_of_threads = blockDim.x;
+    
+    while(number_of_threads>0) {
+        if(tid < number_of_threads) {
+            int first = tid*step_size*2;
+            int second = first + step_size;
+            if(input[second] > input[first])
+              input[first] = input[second];
+        }
+        step_size <<= 1;
+        number_of_threads >>= 1;
+    }
 }
+
+__global__ void sum(int *input) {
+    const int tid = threadIdx.x;
+    int step_size = 1;
+    int number_of_threads = blockDim.x;
+    
+    while(number_of_threads > 0) {
+        if(tid < number_of_threads) {
+            int first = tid * step_size * 2;
+            int second = first + step_size;
+            
+            input[first] += input[second];
+        }
+        step_size <<= 1;
+        number_of_threads >>= 1;
+       
+    }
+}
+
+__global__ void mean_diff_sq(float *input, float mean) {
+    input[threadIdx.x] -= mean;
+    input[threadIdx.x] *= input[threadIdx.x];
+}
+
+__global__ void sum_floats(float *input) {
+    int tid = threadIdx.x;
+    int step_size = 1;
+    int number_of_threads = blockDim.x;
+    
+    while(number_of_threads > 0) {
+        if(tid < number_of_threads) {
+            int first = tid * step_size * 2;
+            int second = first + step_size;
+            
+            input[first] += input[second];
+        }
+        step_size <<= 1;
+        number_of_threads >>= 1;
+       
+    }
+}
+
+void copy_int_to_float(float *dest, int *src, int size){
+    for(int i=0; i<size; i++)
+        dest[i] = float(src[i]);
+}
+
+void random_ints(int *input, int size) {
+    for(int i=0; i<size; i++)  {
+        input[i] = rand()%100;
+        cout<<input[i]<<"  ";   
+    }
+    cout<<endl;
+
+}
+
+int main() {
+    //int n=8;
+    int size = n*sizeof(int); //calculate no. of bytes for array
+        
+    int *arr;
+    int *arr_d, result;
+   
+    arr = (int *)malloc(size);
+    random_ints(arr, n);
+    
+    cudaMalloc((void **)&arr_d, size);
+    
+    //MIN
+    cudaMemcpy(arr_d, arr, size, cudaMemcpyHostToDevice);
+    
+    minimum<<<1,n/2>>>(arr_d);
+    
+    cudaMemcpy(&result, arr_d, sizeof(int), cudaMemcpyDeviceToHost);
+    
+    cout<<"The minimum element is "<<result<<endl;
+      
+       
+    //MAX
+    cudaMemcpy(arr_d, arr, size, cudaMemcpyHostToDevice);
+    
+    maximum<<<1,n/2>>>(arr_d);
+    
+    cudaMemcpy(&result, arr_d, sizeof(int), cudaMemcpyDeviceToHost);
+    
+    cout<<"The maximum element is "<<result<<endl;
+    
+    //SUM
+    cudaMemcpy(arr_d, arr, size, cudaMemcpyHostToDevice);
+    
+    sum<<<1,n/2>>>(arr_d);
+    
+    cudaMemcpy(&result, arr_d, sizeof(int), cudaMemcpyDeviceToHost);
+    
+    cout<<"The sum is "<<result<<endl;
+    
+    //AVERAGE
+    
+    float mean = float(result)/n;
+    cout<<"The mean is "<<mean<<endl;
+    
+    //STANDARD DEVIATION
+    float *arr_float;
+    float *arr_std, stdValue;
+    
+    arr_float = (float *)malloc(n*sizeof(float));
+    cudaMalloc((void **)&arr_std, n*sizeof(float));
+    
+    copy_int_to_float(arr_float, arr, n);
+    
+    cudaMemcpy(arr_std, arr_float, n*sizeof(float), cudaMemcpyHostToDevice);
+    
+    mean_diff_sq <<<1,n>>>(arr_std, mean);
+    sum_floats<<<1,n/2>>>(arr_std);
+    
+    cudaMemcpy(&stdValue, arr_std, sizeof(float), cudaMemcpyDeviceToHost);
+    
+    
+    stdValue = stdValue / n;
+    cout<<"The variance is "<<stdValue<<endl;
+    stdValue = sqrt(stdValue);
+    
+    cout<<"The standard deviation is "<<stdValue<<endl;
+    
+    cudaFree(arr_d);
+           
+    return 0;
+}
+"""
+
+3
+text_file = open("assign1.cu", "w")
+text_file.write(code)
+text_file.close()
+
+4
+!nvcc assign1.cu
+
+5
+!./a.out
+
+6
+!nvprof ./a.out
+
 
 ---------------------------------------
 ALternative:: 
