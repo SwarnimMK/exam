@@ -3,6 +3,8 @@ HPC 2b - Parallel Merge Sort
 Title of the Assignment: Write a program to implement Parallel Merge Sort. Use existing algorithms
 and measure the performance of sequential and parallel algorithms.
 
+ALTERNATE
+
 #include <iostream>
 #include <vector>
 #include <omp.h>
