@@ -189,7 +189,7 @@ text_file.close()
 !nvcc assign1.cu
 
 5
-!./a.out
+!./a.out #executable file to exceute
 
 6
 !nvprof ./a.out
