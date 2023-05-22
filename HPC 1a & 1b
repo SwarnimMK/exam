@@ -101,7 +101,7 @@ void bfs(TreeNode* root) {
             cout << current->val << " ";
 
             // Enqueue the left child, if it exists
-            if (current->left != nullptr) {
+            if (current->left != NULL) {
                 // Critical section to enqueue a node
                 #pragma omp critical
                 {
