@@ -85,12 +85,12 @@ int main() {
 """
 
 3
-text_file = open("assign4b.cu","w")
+text_file = open("matrix.cu","w")
 text_file.write(code)
 text_file.close()
 
 4
-!nvcc assign4b.cu
+!nvcc matrix.cu
 
 5
 !./a.out #executable file to exceute
