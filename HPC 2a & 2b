@@ -88,8 +88,13 @@ void mergeSort(int arr[], int size) {
 
 int main()
 {
-     int arr[] = {9, 2, 7, 1, 5, 6, 8, 4, 3};
-    int size = sizeof(arr) / sizeof(arr[0]);
+    int arr[5];
+    cout<<"Enter the values of an unsorted array:: ";
+    for(int i=0; i<5; i++){
+        cin>>arr[i];
+    }
+       int size = 5;
+    
 
     std::cout << "Original array: ";
     for (int i = 0; i < size; i++) {
